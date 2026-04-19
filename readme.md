@@ -18,10 +18,3 @@
   │ Couple photo (About page) │ static/assets/images/ (name it us.jpg) │                                                                        
   └───────────────────────────┴────────────────────────────────────────
 
-
-
-  
-
-
-  scp -r ~/ioanna/ugc/static/assets/videos root@49.13.71.169:/var/www/tryitaway/static/assets/
-scp -r ~/ioanna/ugc/static/assets/images root@49.13.71.169:/var/www/tryitaway/static/assets/
