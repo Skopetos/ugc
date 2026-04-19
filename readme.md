@@ -20,7 +20,7 @@
 
 
 
-  RMekNMi4jCab
+  
 
 
   scp -r ~/ioanna/ugc/static/assets/videos root@49.13.71.169:/var/www/tryitaway/static/assets/
