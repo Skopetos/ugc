@@ -8,6 +8,7 @@ use lettre::{
     AsyncSmtpTransport, AsyncTransport, Message, Tokio1Executor,
     transport::smtp::authentication::Credentials,
 };
+use std::time::Duration;
 use serde::Deserialize;
 use tower_http::{cors::CorsLayer, services::ServeDir};
 
@@ -42,9 +43,10 @@ async fn contact(Json(payload): Json<ContactForm>) -> StatusCode {
 
     let creds = Credentials::new(smtp_user, smtp_pass);
 
-    let mailer = AsyncSmtpTransport::<Tokio1Executor>::relay("smtp.gmail.com")
+    let mailer = AsyncSmtpTransport::<Tokio1Executor>::starttls_relay("smtp.gmail.com")
         .unwrap()
         .credentials(creds)
+        .timeout(Some(Duration::from_secs(10)))
         .build();
 
     match mailer.send(email).await {
