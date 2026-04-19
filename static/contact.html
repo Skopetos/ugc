@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — [ brand ]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">[ brand ]</a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/portfolio.html">Portfolio</a></li>
+      <li><a href="/services.html">Services</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="contact">
+      <div class="contact-inner">
+        <p class="section-label">Get in touch</p>
+        <h2>Let's work together</h2>
+        <div class="divider"></div>
+        <p>Tell us about your brand and what you're looking for. We'll get back to you within 48 hours.</p>
+
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <input type="text"  name="name"    placeholder="Your name"    required />
+            <input type="email" name="email"   placeholder="Your email"   required />
+          </div>
+          <input type="text" name="brand" placeholder="Brand / company name" />
+          <select name="service">
+            <option value="" disabled selected>Service you're interested in</option>
+            <option value="photography">Photography</option>
+            <option value="video">Video &amp; Reels</option>
+            <option value="drone">Drone (aerial)</option>
+            <option value="full-package">Full content package</option>
+            <option value="other">Other / not sure yet</option>
+          </select>
+          <textarea name="message" placeholder="Tell us about your project — locations, timeline, any references…" required></textarea>
+          <button type="submit" class="btn btn-solid">Send Message</button>
+        </form>
+
+        <div class="form-success" id="form-success">
+          ✓ &nbsp; Message received — we'll be in touch within 48 hours.
+        </div>
+
+        <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--beige-mid); text-align:center;">
+          <p class="section-label" style="margin-bottom:0.5rem;">Prefer email?</p>
+          <a href="mailto:pavrianidis.g@gmail.com" style="font-family:var(--font-serif); font-size:1.3rem; color:var(--brown);">
+            pavrianidis.g@gmail.com
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 [ brand ] · Athens, Greece · <a href="mailto:pavrianidis.g@gmail.com">pavrianidis.g@gmail.com</a></p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/contact.js"></script>
+</body>
+</html>

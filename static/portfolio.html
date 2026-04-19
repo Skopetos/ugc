@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — [ brand ]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">[ brand ]</a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/portfolio.html" class="active">Portfolio</a></li>
+      <li><a href="/services.html">Services</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section>
+      <div class="portfolio-header">
+        <p class="section-label">Our work</p>
+        <h2>Portfolio</h2>
+        <div class="divider"></div>
+        <p>Filter by category or browse everything below.</p>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="travel">Travel</button>
+        <button class="filter-btn" data-filter="food-coffee">Food &amp; Coffee</button>
+        <button class="filter-btn" data-filter="accommodation">Accommodation</button>
+        <button class="filter-btn" data-filter="drone">Drone</button>
+      </div>
+
+      <!--
+        ══════════════════════════════════════════════════
+        HOW TO ADD YOUR MEDIA
+        ══════════════════════════════════════════════════
+
+        For a PHOTO:
+          1. Copy file to:  static/assets/images/<category>/filename.jpg
+          2. Replace the placeholder <div class="portfolio-placeholder"> block with:
+             <img src="/assets/images/<category>/filename.jpg" alt="Short description" />
+
+        For a VIDEO:
+          1. Copy file to:  static/assets/videos/reels/filename.mp4
+             (or drone:     static/assets/videos/drone/filename.mp4)
+          2. Replace the placeholder block with:
+             <video src="/assets/videos/reels/filename.mp4" muted loop playsinline></video>
+
+        Attributes on .portfolio-item:
+          data-category — controls which filter button shows it
+                          values: travel | food-coffee | accommodation | drone
+          data-label    — text shown on hover overlay
+          data-src      — used by the lightbox; set to the same path as src above
+          data-type     — "image" or "video"
+
+        ══════════════════════════════════════════════════
+      -->
+
+      <div class="portfolio-grid" id="portfolio-grid">
+
+        <!-- Travel -->
+        <div class="portfolio-item" data-category="travel" data-label="Travel" data-src="" data-type="image">
+          <div class="portfolio-placeholder">travel · photo</div>
+          <div class="portfolio-overlay"><span>Travel</span></div>
+        </div>
+        <div class="portfolio-item" data-category="travel" data-label="Travel" data-src="" data-type="image">
+          <div class="portfolio-placeholder">travel · photo</div>
+          <div class="portfolio-overlay"><span>Travel</span></div>
+        </div>
+        <div class="portfolio-item" data-category="travel" data-label="Travel" data-src="" data-type="video">
+          <div class="portfolio-placeholder">travel · video</div>
+          <div class="portfolio-overlay"><span>Travel · Reel</span></div>
+        </div>
+
+        <!-- Food & Coffee -->
+        <div class="portfolio-item" data-category="food-coffee" data-label="Food &amp; Coffee" data-src="" data-type="image">
+          <div class="portfolio-placeholder">food &amp; coffee · photo</div>
+          <div class="portfolio-overlay"><span>Food &amp; Coffee</span></div>
+        </div>
+        <div class="portfolio-item" data-category="food-coffee" data-label="Food &amp; Coffee" data-src="" data-type="image">
+          <div class="portfolio-placeholder">food &amp; coffee · photo</div>
+          <div class="portfolio-overlay"><span>Food &amp; Coffee</span></div>
+        </div>
+        <div class="portfolio-item" data-category="food-coffee" data-label="Food &amp; Coffee" data-src="" data-type="video">
+          <div class="portfolio-placeholder">food &amp; coffee · video</div>
+          <div class="portfolio-overlay"><span>Food &amp; Coffee · Reel</span></div>
+        </div>
+
+        <!-- Accommodation -->
+        <div class="portfolio-item" data-category="accommodation" data-label="Accommodation" data-src="" data-type="image">
+          <div class="portfolio-placeholder">accommodation · photo</div>
+          <div class="portfolio-overlay"><span>Accommodation</span></div>
+        </div>
+        <div class="portfolio-item" data-category="accommodation" data-label="Accommodation" data-src="" data-type="image">
+          <div class="portfolio-placeholder">accommodation · photo</div>
+          <div class="portfolio-overlay"><span>Accommodation</span></div>
+        </div>
+        <div class="portfolio-item" data-category="accommodation" data-label="Accommodation" data-src="" data-type="video">
+          <div class="portfolio-placeholder">accommodation · video</div>
+          <div class="portfolio-overlay"><span>Accommodation · Reel</span></div>
+        </div>
+
+        <!-- Drone -->
+        <div class="portfolio-item" data-category="drone" data-label="Drone" data-src="" data-type="image">
+          <div class="portfolio-placeholder">drone · photo</div>
+          <div class="portfolio-overlay"><span>Drone</span></div>
+        </div>
+        <div class="portfolio-item" data-category="drone" data-label="Drone" data-src="" data-type="video">
+          <div class="portfolio-placeholder">drone · video</div>
+          <div class="portfolio-overlay"><span>Drone · Aerial</span></div>
+        </div>
+        <div class="portfolio-item" data-category="drone" data-label="Drone" data-src="" data-type="image">
+          <div class="portfolio-placeholder">drone · photo</div>
+          <div class="portfolio-overlay"><span>Drone</span></div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕ close</button>
+      <div id="lightbox-media"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 [ brand ] · Athens, Greece · <a href="mailto:pavrianidis.g@gmail.com">pavrianidis.g@gmail.com</a></p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/portfolio.js"></script>
+</body>
+</html>
