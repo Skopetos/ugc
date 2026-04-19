@@ -15,7 +15,13 @@ filterBtns.forEach(btn => {
   });
 });
 
-// ── Lightbox ──
+// ── Force autoplay on mobile (muted videos need autoplay attr to show first frame) ──
+document.querySelectorAll('.portfolio-item video').forEach(v => {
+  v.setAttribute('autoplay', '');
+  v.play().catch(() => {}); // silently ignore if browser blocks
+});
+
+// ── Lightbox / new tab ──
 const lightbox      = document.getElementById('lightbox');
 const lightboxMedia = document.getElementById('lightbox-media');
 const lightboxClose = document.getElementById('lightbox-close');
@@ -25,7 +31,11 @@ items.forEach(item => {
     const src  = item.dataset.src;
     const type = item.dataset.type;
     if (!src) return; // placeholder — no media yet
-    if (type === 'video') return; // videos play in grid, no lightbox
+
+    if (type === 'video') {
+      window.open(src, '_blank');
+      return;
+    }
 
     lightboxMedia.innerHTML = `<img src="${src}" alt="${item.dataset.label}" />`;
     lightbox.classList.add('open');
@@ -39,6 +49,6 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-lightboxClose.addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+lightboxClose?.addEventListener('click', closeLightbox);
+lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
