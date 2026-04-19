@@ -104,19 +104,19 @@
           Video:  <video src="/assets/videos/reels/filename.mp4" muted loop playsinline></video>
           Keep the data-category and data-label attributes for the overlay text.
         -->
-        <div class="portfolio-item" data-category="travel" data-label="Travel">
-          <img src="/assets/images/hero/DJI_0068.JPG" alt="Description" />
+        <div class="portfolio-item" data-category="travel" data-label="Travel" data-src="/assets/images/hero/DJI_0068.JPG" data-type="image">
+          <img src="/assets/images/hero/DJI_0068.JPG" alt="Travel" />
           <div class="portfolio-overlay"><span>Travel</span></div>
         </div>
-        <div class="portfolio-item" data-category="food-coffee" data-label="Food &amp; Coffee">
+        <div class="portfolio-item" data-category="food-coffee" data-label="Food &amp; Coffee" data-src="" data-type="image">
           <div class="portfolio-placeholder">food &amp; coffee · photo</div>
           <div class="portfolio-overlay"><span>Food &amp; Coffee</span></div>
         </div>
-        <div class="portfolio-item" data-category="accommodation" data-label="Accommodation">
-          <div class="portfolio-placeholder">accommodation · video</div>
+        <div class="portfolio-item" data-category="accommodation" data-label="Accommodation" data-src="" data-type="image">
+          <div class="portfolio-placeholder">accommodation · photo</div>
           <div class="portfolio-overlay"><span>Accommodation</span></div>
         </div>
-        <div class="portfolio-item" data-category="drone" data-label="Drone">
+        <div class="portfolio-item" data-category="drone" data-label="Drone" data-src="/assets/videos/drone/first.mp4" data-type="video">
           <video src="/assets/videos/drone/first.mp4" muted loop playsinline></video>
           <div class="portfolio-overlay"><span>Drone</span></div>
         </div>
@@ -146,11 +146,20 @@
 
   </main>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕ close</button>
+      <div id="lightbox-media"></div>
+    </div>
+  </div>
+
   <!-- ── Footer ── -->
   <footer>
     <p>© 2026 TryItAway · Greece · <a href="mailto:tryitaway.info@gmail.com">tryitaway.info@gmail.com</a></p>
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/portfolio.js"></script>
 </body>
 </html>

@@ -25,11 +25,9 @@ items.forEach(item => {
     const src  = item.dataset.src;
     const type = item.dataset.type;
     if (!src) return; // placeholder — no media yet
+    if (type === 'video') return; // videos play in grid, no lightbox
 
-    lightboxMedia.innerHTML = type === 'video'
-      ? `<video src="${src}" controls autoplay style="max-width:90vw;max-height:88vh;border-radius:4px;"></video>`
-      : `<img src="${src}" alt="${item.dataset.label}" />`;
-
+    lightboxMedia.innerHTML = `<img src="${src}" alt="${item.dataset.label}" />`;
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
   });
