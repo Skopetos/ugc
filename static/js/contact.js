@@ -7,9 +7,9 @@ form?.addEventListener('submit', async e => {
   const data = Object.fromEntries(new FormData(form));
 
   try {
-    const res = await fetch('/api/contact', {
+    const res = await fetch('https://formspree.io/f/mbdqkgro', {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body:    JSON.stringify(data),
     });
 
@@ -17,11 +17,9 @@ form?.addEventListener('submit', async e => {
       form.style.display    = 'none';
       success.style.display = 'block';
     } else {
-      // Fallback to mailto if server returns error
-      window.location.href = `mailto:tryitaway.info@gmail.com?subject=Inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`;
+      alert('Something went wrong. Please email us directly at tryitaway.info@gmail.com');
     }
   } catch {
-    // Offline / server not running — open mail client
-    window.location.href = `mailto:tryitaway.info@gmail.com?subject=Inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`;
+    alert('Something went wrong. Please email us directly at tryitaway.info@gmail.com');
   }
 });
