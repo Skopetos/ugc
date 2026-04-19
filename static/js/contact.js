@@ -18,10 +18,10 @@ form?.addEventListener('submit', async e => {
       success.style.display = 'block';
     } else {
       // Fallback to mailto if server returns error
-      window.location.href = `mailto:pavrianidis.g@gmail.com?subject=Inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`;
+      window.location.href = `mailto:tryitaway.info@gmail.com?subject=Inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`;
     }
   } catch {
     // Offline / server not running — open mail client
-    window.location.href = `mailto:pavrianidis.g@gmail.com?subject=Inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`;
+    window.location.href = `mailto:tryitaway.info@gmail.com?subject=Inquiry from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`;
   }
 });
