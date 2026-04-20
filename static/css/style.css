@@ -311,6 +311,8 @@ section {
   text-align: left;
 }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.phone-row { display: grid; grid-template-columns: 160px 1fr; gap: 1rem; }
+.phone-code { width: 100%; }
 .contact-form input,
 .contact-form textarea,
 .contact-form select {
@@ -417,6 +419,7 @@ footer a { color: var(--beige); }
   .about-grid { grid-template-columns: 1fr; }
   .about-img { aspect-ratio: 16/9; }
   .form-row { grid-template-columns: 1fr; }
+  .phone-row { grid-template-columns: 1fr; }
 
   .portfolio-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
