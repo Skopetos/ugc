@@ -90,7 +90,12 @@ if (portfolioGrid) {
       setupLightbox(portfolioGrid);
     });
 } else {
-  // index.html featured grid — items are static
   const featuredGrid = document.getElementById('featured-grid');
-  if (featuredGrid) setupLightbox(featuredGrid);
+  if (featuredGrid) {
+    featuredGrid.querySelectorAll('video').forEach(v => {
+      v.setAttribute('autoplay', '');
+      v.play().catch(() => {});
+    });
+    setupLightbox(featuredGrid);
+  }
 }
