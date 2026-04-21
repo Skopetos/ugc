@@ -58,13 +58,13 @@ function setupLightbox(grid) {
       if (!src) return;
 
       if (type === 'video') {
-        lightboxMedia.innerHTML = `<video src="${src}" controls autoplay style="max-width:100%;max-height:80vh;"></video>`;
+        lightboxMedia.innerHTML = `<video src="${src}" controls autoplay controlsList="nodownload" oncontextmenu="return false;" style="max-width:100%;max-height:80vh;"></video>`;
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
         return;
       }
 
-      lightboxMedia.innerHTML = `<img src="${src}" alt="${item.dataset.label}" />`;
+      lightboxMedia.innerHTML = `<img src="${src}" alt="${item.dataset.label}" oncontextmenu="return false;" draggable="false" />`;
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     });
