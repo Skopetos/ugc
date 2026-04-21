@@ -58,7 +58,9 @@ function setupLightbox(grid) {
       if (!src) return;
 
       if (type === 'video') {
-        window.open(src, '_blank');
+        lightboxMedia.innerHTML = `<video src="${src}" controls autoplay style="max-width:100%;max-height:80vh;"></video>`;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
         return;
       }
 
@@ -69,6 +71,8 @@ function setupLightbox(grid) {
   });
 
   function closeLightbox() {
+    const video = lightboxMedia.querySelector('video');
+    if (video) video.pause();
     lightbox.classList.remove('open');
     lightboxMedia.innerHTML = '';
     document.body.style.overflow = '';
