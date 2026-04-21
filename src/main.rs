@@ -2,7 +2,7 @@ use axum::{
     Router,
     extract::Json,
     http::StatusCode,
-    routing::{get_service, post},
+    routing::post,
 };
 use lettre::{
     AsyncSmtpTransport, AsyncTransport, Message, Tokio1Executor,
@@ -10,7 +10,7 @@ use lettre::{
 };
 use std::time::Duration;
 use serde::Deserialize;
-use tower_http::{cors::CorsLayer, services::ServeDir};
+use tower_http::cors::CorsLayer;
 
 #[derive(Deserialize)]
 struct ContactForm {
@@ -62,11 +62,8 @@ async fn contact(Json(payload): Json<ContactForm>) -> StatusCode {
 async fn main() {
     dotenvy::dotenv().ok();
 
-    let static_files = get_service(ServeDir::new("static").append_index_html_on_directories(true));
-
     let app = Router::new()
         .route("/api/contact", post(contact))
-        .fallback_service(static_files)
         .layer(CorsLayer::permissive());
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await.unwrap();
