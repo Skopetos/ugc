@@ -92,10 +92,11 @@ if (portfolioGrid) {
 } else {
   const featuredGrid = document.getElementById('featured-grid');
   if (featuredGrid) {
-    featuredGrid.querySelectorAll('video').forEach(v => {
-      v.setAttribute('autoplay', '');
-      v.play().catch(() => {});
-    });
-    setupLightbox(featuredGrid);
+    fetch('/api/recent')
+      .then(r => r.json())
+      .then(items => {
+        items.forEach(item => featuredGrid.appendChild(buildItem(item)));
+        setupLightbox(featuredGrid);
+      });
   }
 }

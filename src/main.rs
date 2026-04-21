@@ -31,6 +31,30 @@ fn category_label(cat: &str) -> &str {
     }
 }
 
+async fn recent_list() -> axum::Json<Vec<MediaItem>> {
+    let mut items: Vec<MediaItem> = Vec::new();
+
+    if let Ok(files) = std::fs::read_dir("static/assets/recent") {
+        for file in files.flatten() {
+            let fname = file.file_name().to_string_lossy().to_string();
+            let ext = fname.rsplit('.').next().unwrap_or("").to_lowercase();
+            let media_type = match ext.as_str() {
+                "jpg" | "jpeg" | "png" | "webp" => "image",
+                "mp4" | "mov" | "webm"          => "video",
+                _                               => continue,
+            };
+            items.push(MediaItem {
+                src:        format!("/assets/recent/{}", fname),
+                category:   String::new(),
+                label:      String::new(),
+                media_type: media_type.to_string(),
+            });
+        }
+    }
+
+    axum::Json(items)
+}
+
 async fn media_list() -> axum::Json<Vec<MediaItem>> {
     let mut items: Vec<MediaItem> = Vec::new();
 
@@ -130,6 +154,7 @@ async fn main() {
     dotenvy::dotenv().ok();
 
     let app = Router::new()
+        .route("/api/recent", get(recent_list))
         .route("/api/media", get(media_list))
         .route("/api/contact", post(contact))
         .layer(CorsLayer::permissive());
