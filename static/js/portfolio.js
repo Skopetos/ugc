@@ -96,7 +96,7 @@ if (portfolioGrid) {
 } else {
   const featuredGrid = document.getElementById('featured-grid');
   if (featuredGrid) {
-    fetch('/api/recent')
+    fetch('/api/highlights')
       .then(r => r.json())
       .then(items => {
         items.forEach(item => featuredGrid.appendChild(buildItem(item)));
