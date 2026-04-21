@@ -2,15 +2,82 @@ use axum::{
     Router,
     extract::Json,
     http::StatusCode,
-    routing::post,
+    routing::{get, post},
 };
 use lettre::{
     AsyncSmtpTransport, AsyncTransport, Message, Tokio1Executor,
     transport::smtp::authentication::Credentials,
 };
 use std::time::Duration;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use tower_http::cors::CorsLayer;
+
+#[derive(Serialize)]
+struct MediaItem {
+    src:        String,
+    category:   String,
+    label:      String,
+    media_type: String,
+}
+
+fn category_label(cat: &str) -> &str {
+    match cat {
+        "travel"                  => "Travel Lifestyle",
+        "food-coffee"             => "Food & Coffee",
+        "accommodation"           => "Accommodation",
+        "drone"                   => "Drone",
+        "aesthetic-destinations"  => "Aesthetic Destinations",
+        _                         => cat,
+    }
+}
+
+async fn media_list() -> axum::Json<Vec<MediaItem>> {
+    let mut items: Vec<MediaItem> = Vec::new();
+
+    if let Ok(cats) = std::fs::read_dir("static/assets/images") {
+        for cat in cats.flatten() {
+            let cat_name = cat.file_name().to_string_lossy().to_string();
+            if cat_name == "hero" { continue; }
+            if let Ok(files) = std::fs::read_dir(cat.path()) {
+                for file in files.flatten() {
+                    let fname = file.file_name().to_string_lossy().to_string();
+                    let ext = fname.rsplit('.').next().unwrap_or("").to_lowercase();
+                    if matches!(ext.as_str(), "jpg" | "jpeg" | "png" | "webp") {
+                        items.push(MediaItem {
+                            src:        format!("/assets/images/{}/{}", cat_name, fname),
+                            category:   cat_name.clone(),
+                            label:      category_label(&cat_name).to_string(),
+                            media_type: "image".to_string(),
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    if let Ok(cats) = std::fs::read_dir("static/assets/videos") {
+        for cat in cats.flatten() {
+            let folder = cat.file_name().to_string_lossy().to_string();
+            let category = if folder == "reels" { "travel".to_string() } else { folder.clone() };
+            if let Ok(files) = std::fs::read_dir(cat.path()) {
+                for file in files.flatten() {
+                    let fname = file.file_name().to_string_lossy().to_string();
+                    let ext = fname.rsplit('.').next().unwrap_or("").to_lowercase();
+                    if matches!(ext.as_str(), "mp4" | "mov" | "webm") {
+                        items.push(MediaItem {
+                            src:        format!("/assets/videos/{}/{}", folder, fname),
+                            category:   category.clone(),
+                            label:      category_label(&category).to_string(),
+                            media_type: "video".to_string(),
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    axum::Json(items)
+}
 
 #[derive(Deserialize)]
 struct ContactForm {
@@ -63,6 +130,7 @@ async fn main() {
     dotenvy::dotenv().ok();
 
     let app = Router::new()
+        .route("/api/media", get(media_list))
         .route("/api/contact", post(contact))
         .layer(CorsLayer::permissive());
 

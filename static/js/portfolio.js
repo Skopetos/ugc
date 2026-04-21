@@ -1,54 +1,96 @@
-// ── Filter ──
-const filterBtns = document.querySelectorAll('.filter-btn');
-const items      = document.querySelectorAll('.portfolio-item');
+function buildItem(item) {
+  const div = document.createElement('div');
+  div.className = 'portfolio-item';
+  div.dataset.category  = item.category;
+  div.dataset.label     = item.label;
+  div.dataset.src       = item.src;
+  div.dataset.type      = item.media_type;
 
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  if (item.media_type === 'video') {
+    const v = document.createElement('video');
+    v.src      = item.src;
+    v.muted    = true;
+    v.loop     = true;
+    v.setAttribute('playsinline', '');
+    v.setAttribute('autoplay', '');
+    v.play().catch(() => {});
+    div.appendChild(v);
+  } else {
+    const img = document.createElement('img');
+    img.src = item.src;
+    img.alt = item.label;
+    div.appendChild(img);
+  }
 
-    const filter = btn.dataset.filter;
-    items.forEach(item => {
-      const show = filter === 'all' || item.dataset.category === filter;
-      item.style.display = show ? '' : 'none';
-    });
-  });
-});
+  const overlay = document.createElement('div');
+  overlay.className = 'portfolio-overlay';
+  overlay.innerHTML = `<span>${item.label}</span>`;
+  div.appendChild(overlay);
 
-// ── Force autoplay on mobile (muted videos need autoplay attr to show first frame) ──
-document.querySelectorAll('.portfolio-item video').forEach(v => {
-  v.setAttribute('autoplay', '');
-  v.play().catch(() => {}); // silently ignore if browser blocks
-});
-
-// ── Lightbox / new tab ──
-const lightbox      = document.getElementById('lightbox');
-const lightboxMedia = document.getElementById('lightbox-media');
-const lightboxClose = document.getElementById('lightbox-close');
-
-items.forEach(item => {
-  item.addEventListener('click', () => {
-    const src  = item.dataset.src;
-    const type = item.dataset.type;
-    if (!src) return; // placeholder — no media yet
-
-    if (type === 'video') {
-      window.open(src, '_blank');
-      return;
-    }
-
-    lightboxMedia.innerHTML = `<img src="${src}" alt="${item.dataset.label}" />`;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
-});
-
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  lightboxMedia.innerHTML = '';
-  document.body.style.overflow = '';
+  return div;
 }
 
-lightboxClose?.addEventListener('click', closeLightbox);
-lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+function setupFilters(grid) {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  if (!filterBtns.length) return;
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      grid.querySelectorAll('.portfolio-item').forEach(item => {
+        item.style.display = filter === 'all' || item.dataset.category === filter ? '' : 'none';
+      });
+    });
+  });
+}
+
+function setupLightbox(grid) {
+  const lightbox      = document.getElementById('lightbox');
+  const lightboxMedia = document.getElementById('lightbox-media');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  grid.querySelectorAll('.portfolio-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const src  = item.dataset.src;
+      const type = item.dataset.type;
+      if (!src) return;
+
+      if (type === 'video') {
+        window.open(src, '_blank');
+        return;
+      }
+
+      lightboxMedia.innerHTML = `<img src="${src}" alt="${item.dataset.label}" />`;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxMedia.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+}
+
+const portfolioGrid = document.getElementById('portfolio-grid');
+
+if (portfolioGrid) {
+  fetch('/api/media')
+    .then(r => r.json())
+    .then(items => {
+      items.forEach(item => portfolioGrid.appendChild(buildItem(item)));
+      setupFilters(portfolioGrid);
+      setupLightbox(portfolioGrid);
+    });
+} else {
+  // index.html featured grid — items are static
+  const featuredGrid = document.getElementById('featured-grid');
+  if (featuredGrid) setupLightbox(featuredGrid);
+}
